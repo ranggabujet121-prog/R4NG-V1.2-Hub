@@ -2,7 +2,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
    Name = "R4NG•V1.2 Hub ",
-   Icon = app-window-mac, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   Icon = "app-window-mac", -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "R4NG•V1.2 Loading...",
    LoadingSubtitle = "Coded By: Rangapu bjirr",
    ShowText = "R4NG HUB", -- for mobile users to unhide rayfield, change if you'd like
