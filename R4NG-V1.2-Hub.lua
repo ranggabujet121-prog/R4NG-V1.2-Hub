@@ -31,7 +31,7 @@ local Window = Rayfield:CreateWindow({
    }
 })
 local UniversalTab = Window:CreateTab("Universal Script", "globe")
-local Section = UniversalTab:CreateSection("Script universal")
+local Section = UniversalTab:CreateSection("🔥Script universal")
 
 local Slider = UniversalTab:CreateSlider({
    Name = "WalkSpeed",
@@ -49,7 +49,7 @@ local Slider = UniversalTab:CreateSlider({
    Range = {50, 560},
    Increment = 5,
    Suffix = "JP",
-   CurrentValue = 10,
+   CurrentValue = 50,
    Flag = "JumpPowerSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
@@ -69,16 +69,72 @@ local Button =UniversalTab:CreateButton({
    -- The function that takes place when the button is pressed
    end,
 })
+local Toggle = UniversalTab:CreateToggle({
+   Name = "God Mode",
+   CurrentValue = false,
+   Flag = "GodModeToggle", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+       -- UNIVERSAL GOD MODE (LOADSTRING READY)
 
-local Button = UniversalTab:CreateButton({
-   Name = "God Mode GUI",
-   Callback = function()
-       loadstring(game:HttpGet("https://raw.githubusercontent.com/mascaracathub/Test-Script/refs/heads/main/obfuscated_script-1765900058766.lua.txt"))()
-   -- The function that takes place when the button is pressed
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local godConn
+local charConn
+
+local function applyGod(char)
+    local hum = char:WaitForChild("Humanoid", 5)
+    if not hum then return end
+
+    hum.MaxHealth = math.huge
+    hum.Health = math.huge
+
+    if godConn then godConn:Disconnect() end
+    godConn = hum.HealthChanged:Connect(function()
+        if hum.Health < hum.MaxHealth then
+            hum.Health = hum.MaxHealth
+        end
+    end)
+end
+
+local function enableGod()
+    local char = player.Character or player.CharacterAdded:Wait()
+    applyGod(char)
+
+    if charConn then charConn:Disconnect() end
+    charConn = player.CharacterAdded:Connect(applyGod)
+end
+
+local function disableGod()
+    if godConn then
+        godConn:Disconnect()
+        godConn = nil
+    end
+    if charConn then
+        charConn:Disconnect()
+        charConn = nil
+    end
+
+    local char = player.Character
+    if not char then return end
+    local hum = char:FindFirstChildOfClass("Humanoid")
+    if not hum then return end
+
+    hum.MaxHealth = 100
+    hum.Health = 100
+end
+
+return {
+    Enable = enableGod,
+    Disable = disableGod
+}
+   -- The function that takes place when the toggle is pressed
+   -- The variable (Value) is a boolean on whether the toggle is true or false
    end,
 })
+
 local GameTab = Window:CreateTab("Spesific Game", "gamepad-2")
-local Section = GameTab:CreateSection("Section Example")
+local Section = GameTab:CreateSection("🎮Game Pilihan")
 
 local Button = GameTab:CreateButton({
    Name = "BrookHaven",
@@ -98,7 +154,7 @@ local Button = GameTab:CreateButton({
 
 Rayfield:Notify({
    Title = "R4NG-V1.2 Loaded",
-   Content = "Semua scriot berhasil dimuat!",
+   Content = "Semua script berhasil dimuat!",
    Duration = 6,
    Image = "check-check",
 })
